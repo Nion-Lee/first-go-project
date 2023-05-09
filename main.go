@@ -9,7 +9,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 )
 
 func main() {
@@ -29,34 +28,30 @@ func main() {
 	}
 	fmt.Println(parsed)
 
-	if guid == parsed {
-		fmt.Println("射惹")
-	}
-
-	num1, _ := decimal.NewFromString("1.5")
-	num2, _ := decimal.NewFromString("1.3")
-	num3 := num1.Sub(num2)
-	num4, _ := decimal.NewFromString("0.2")
-
-	if num3.Equal(num4) {
-		fmt.Println("相等")
-	} else {
-		fmt.Println("不相等")
-		fmt.Println(num3, "!=", num4)
-	}
-
 	dto := dtos.CustomerDTO{
-		UID:   "",
-		Name:  "",
-		Age:   0,
-		Email: "",
+		UID:   "5566",
+		Name:  "Nion",
+		Age:   32,
+		Email: "niosinmine@rrrr.com",
 	}
 
 	jsonBytes, _ := json.Marshal(dto)
-	json := string(jsonBytes)
+	json1 := string(jsonBytes)
 	fmt.Println(jsonBytes)
-	entity := services.DesrilizeToStruct(&json)
+	fmt.Println(json1)
+	entity, _ := services.DesrilizeToStruct(&json1)
+	fmt.Println("我在這")
 	fmt.Println(entity)
+	fmt.Println("我結束")
+
+	var dto1 dtos.CustomerDTO
+	errrrr := json.Unmarshal(jsonBytes, &dto1)
+
+	fmt.Println(errrrr)
+	fmt.Println(dto1)
+
+	a, _ := json.Marshal(dto1)
+	fmt.Println(string(a))
 
 	return
 

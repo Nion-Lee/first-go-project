@@ -3,6 +3,7 @@ package services
 import (
 	"First_Go_Project/dtos"
 	"First_Go_Project/repositories"
+	"encoding/json"
 )
 
 func CreateCustomer(dto *dtos.CustomerDTO) (int, error) {
@@ -17,10 +18,9 @@ func MapToCustomerEntity(dto *dtos.CustomerDTO) (*repositories.CustomerEntity, e
 	return nil, nil
 }
 
-func DesrilizeToStruct(json *string) *dtos.CustomerDTO {
-	// var dto dtos.CustomerDTO
-	// err := json.Unmarshal([]byte(*json), &dto)
+func DesrilizeToStruct(str *string) (*dtos.CustomerDTO, error) {
+	var dto dtos.CustomerDTO
+	err := json.Unmarshal([]byte(*str), &dto)
 
-	// return &dto
-	return nil
+	return &dto, err
 }
