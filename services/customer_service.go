@@ -1,9 +1,9 @@
 package services
 
 import (
-	"First_Go_Project/dtos"
-	"First_Go_Project/repositories"
 	"encoding/json"
+	"first-go-project/dtos"
+	"first-go-project/repositories"
 )
 
 func HelloWorld() string {

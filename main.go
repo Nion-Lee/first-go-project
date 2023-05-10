@@ -1,7 +1,7 @@
 package main
 
 import (
-	"First_Go_Project/routers"
+	"first-go-project/routers"
 
 	"github.com/gin-gonic/gin"
 )

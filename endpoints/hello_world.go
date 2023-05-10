@@ -1,7 +1,7 @@
 package endpoints
 
 import (
-	"First_Go_Project/services"
+	"first-go-project/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
