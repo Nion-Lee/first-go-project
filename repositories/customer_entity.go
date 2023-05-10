@@ -1,10 +1,8 @@
 package repositories
 
-import "github.com/google/uuid"
-
 type CustomerEntity struct {
 	ID    int
-	UID   uuid.UUID
+	UID   string
 	Name  string
 	Age   int
 	Email string
