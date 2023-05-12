@@ -7,7 +7,6 @@ import (
 )
 
 func RegisterRoutes(router *gin.Engine) {
-	router.GET("/", endpoints.HelloWorld)
 	router.PUT("/Customer/Create", endpoints.CreateCustomer)
 
 }

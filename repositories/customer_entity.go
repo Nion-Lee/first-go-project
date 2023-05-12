@@ -4,7 +4,7 @@ import "time"
 
 type CustomerEntity struct {
 	ID      int    `gorm:"primaryKey"`
-	UID     string `gorm:"unique"`
+	UID     string `gorm:"type:uuid;not null;"`
 	Name    string
 	Age     int
 	Email   string
