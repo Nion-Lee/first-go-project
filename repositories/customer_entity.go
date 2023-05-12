@@ -1,9 +1,13 @@
 package repositories
 
+import "time"
+
 type CustomerEntity struct {
-	ID    int
-	UID   string
-	Name  string
-	Age   int
-	Email string
+	ID      int    `gorm:"primaryKey"`
+	UID     string `gorm:"unique"`
+	Name    string
+	Age     int
+	Email   string
+	Created time.Time
+	Updated time.Time
 }
