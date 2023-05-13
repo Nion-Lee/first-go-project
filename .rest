@@ -1,12 +1,18 @@
+
 GET http://localhost:8080/ HTTP/2.0
+###
+
+GET  http://localhost:8080/Customer/b9246aa9-548c-4887-9526-02ab70894bea HTTP/2.0
+Content-Type: application/json
 ###
 
 PUT http://localhost:8080/Customer/Create HTTP/2.0
 Content-Type: application/json
 
 {
-    "UID": "123", 
+    "UID": "b9246aa9-548c-4887-9526-02ab70894bea", 
     "Name": "John Doe", 
     "Age": 30, 
     "Email": "johndoe@example.com"
 }
+###

@@ -1,30 +1,35 @@
 package services
 
 import (
-	"encoding/json"
+	"errors"
 	"first-go-project/dtos"
 	"first-go-project/repositories"
+
+	"github.com/google/uuid"
 )
 
+// 測試用
 func HelloWorld() string {
 	return "HiHi我在這"
 }
 
-func GetCustomer(dto *dtos.CustomerDTO) (*dtos.CustomerDTO, error) {
-	return nil, nil
+func GetCustomer(uuid *string) (*dtos.CustomerDTO, error) {
+	entity, err := repositories.GetCustomerByUID(uuid)
+	dto := mapToCustomerDTO(entity)
+
+	return dto, err
 }
 
-func CreateCustomer(dto *dtos.CustomerDTO) (*dtos.CustomerDTO, error) {
-	entity, err := getCustomerByUID(&dto.UID)
-	if entity != nil || err != nil {
-		return nil, err
+func CreateCustomer(dto *dtos.CustomerDTO) (string, error) {
+	err := repositories.HasCustomerByUID(&dto.UID)
+	if err == nil {
+		return "", errors.New("已有該客戶資料，無法重新創建")
 	}
 
-	newEntity := MapToCustomerEntity(dto)
-	newEntity, err = repositories.CreateCustomer(newEntity)
-	newDTO := MapToCustomerDTO(newEntity)
+	entity := mapToCustomerEntity(dto)
+	uid, err := repositories.CreateCustomer(entity)
 
-	return newDTO, err
+	return uid, err
 }
 
 func UpdateCustomer(dto *dtos.CustomerDTO) error {
@@ -35,7 +40,7 @@ func DeleteCustomer(dto *dtos.CustomerDTO) error {
 	return nil
 }
 
-func MapToCustomerDTO(entity *repositories.CustomerEntity) *dtos.CustomerDTO {
+func mapToCustomerDTO(entity *repositories.CustomerEntity) *dtos.CustomerDTO {
 	dto := dtos.CustomerDTO{
 		UID:   entity.UID,
 		Name:  entity.Name,
@@ -46,7 +51,7 @@ func MapToCustomerDTO(entity *repositories.CustomerEntity) *dtos.CustomerDTO {
 	return &dto
 }
 
-func MapToCustomerEntity(dto *dtos.CustomerDTO) *repositories.CustomerEntity {
+func mapToCustomerEntity(dto *dtos.CustomerDTO) *repositories.CustomerEntity {
 	entity := repositories.CustomerEntity{
 		UID:   dto.UID,
 		Name:  dto.Name,
@@ -54,16 +59,9 @@ func MapToCustomerEntity(dto *dtos.CustomerDTO) *repositories.CustomerEntity {
 		Email: dto.Email,
 	}
 
+	if entity.UID == "" {
+		entity.UID = uuid.New().String()
+	}
+
 	return &entity
-}
-
-func DesrilizeToStruct(str *string) (*dtos.CustomerDTO, error) {
-	var dto dtos.CustomerDTO
-	err := json.Unmarshal([]byte(*str), &dto)
-
-	return &dto, err
-}
-
-func getCustomerByUID(uid *string) (*repositories.CustomerEntity, error) {
-	return repositories.GetCustomerByUID(uid)
 }
