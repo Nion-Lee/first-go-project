@@ -1,12 +1,15 @@
 package repositories
 
-import "time"
+import (
+	"time"
+)
 
-func GetCustomerByUID(uid *string) (*CustomerEntity, error) {
+func GetCustomerByUID(uid *string, entity chan *CustomerEntity, err chan error) {
 	created := &CustomerEntity{}
 	result := context.Where("UID = ?", uid).First(created)
 
-	return created, result.Error
+	entity <- created
+	err <- result.Error
 }
 
 func HasCustomerByUID(uid *string) error {

@@ -14,10 +14,13 @@ func HelloWorld() string {
 }
 
 func GetCustomer(uuid *string) (*dtos.CustomerDTO, error) {
-	entity, err := repositories.GetCustomerByUID(uuid)
-	dto := mapToCustomerDTO(entity)
+	entity := make(chan *repositories.CustomerEntity)
+	err := make(chan error)
 
-	return dto, err
+	go repositories.GetCustomerByUID(uuid, entity, err)
+	dto := mapToCustomerDTO(<-entity)
+
+	return dto, <-err
 }
 
 func CreateCustomer(dto *dtos.CustomerDTO) (string, error) {
