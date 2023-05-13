@@ -10,8 +10,7 @@ func GetCustomerByUID(uid *string) (*CustomerEntity, error) {
 }
 
 func HasCustomerByUID(uid *string) error {
-	aa := context.Where("UID = ?", uid).First(&CustomerEntity{}).Error
-	return aa
+	return context.Where("UID = ?", uid).First(&CustomerEntity{}).Error
 }
 
 func CreateCustomer(entity *CustomerEntity) (string, error) {
