@@ -1,8 +1,8 @@
 package main
 
 import (
-	"first-go-project/repositories"
-	"first-go-project/routers"
+	"first-go-project/src/repositories"
+	"first-go-project/src/routers"
 	"fmt"
 
 	"github.com/gin-gonic/gin"

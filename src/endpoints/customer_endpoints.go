@@ -1,8 +1,8 @@
 package endpoints
 
 import (
-	"first-go-project/dtos"
-	"first-go-project/services"
+	"first-go-project/src/dtos"
+	"first-go-project/src/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

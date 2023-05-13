@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"first-go-project/endpoints"
+	"first-go-project/src/endpoints"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
-	"first-go-project/dtos"
-	"first-go-project/repositories"
+	"first-go-project/src/dtos"
+	"first-go-project/src/repositories"
 
 	"github.com/google/uuid"
 )
