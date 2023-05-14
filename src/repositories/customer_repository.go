@@ -12,14 +12,16 @@ func GetCustomerByUID(uid *string, entity chan *CustomerEntity, err chan error) 
 	err <- result.Error
 }
 
-func HasCustomerByUID(uid *string) error {
-	return context.Where("UID = ?", uid).First(&CustomerEntity{}).Error
+func HasCustomerByUID(uid *string, err chan error) {
+	err <- context.Where("UID = ?", uid).First(&CustomerEntity{}).Error
 }
 
-func CreateCustomer(entity *CustomerEntity) (string, error) {
+func CreateCustomer(entity *CustomerEntity, uid chan *string, err chan error) {
 	entity.Created = time.Now()
 	entity.Updated = entity.Created
 
 	result := context.Create(entity)
-	return entity.UID, result.Error
+
+	uid <- &entity.UID
+	err <- result.Error
 }

@@ -23,16 +23,19 @@ func GetCustomer(uuid *string) (*dtos.CustomerDTO, error) {
 	return dto, <-err
 }
 
-func CreateCustomer(dto *dtos.CustomerDTO) (string, error) {
-	err := repositories.HasCustomerByUID(&dto.UID)
-	if err == nil {
-		return "", errors.New("已有該客戶資料，無法重新創建")
+func CreateCustomer(dto *dtos.CustomerDTO) (*string, error) {
+	err := make(chan error)
+	go repositories.HasCustomerByUID(&dto.UID, err)
+
+	if <-err == nil {
+		return nil, errors.New("已有該客戶資料，無法重新創建")
 	}
 
+	uid := make(chan *string)
 	entity := mapToCustomerEntity(dto)
-	uid, err := repositories.CreateCustomer(entity)
+	go repositories.CreateCustomer(entity, uid, err)
 
-	return uid, err
+	return <-uid, <-err
 }
 
 func UpdateCustomer(dto *dtos.CustomerDTO) error {
