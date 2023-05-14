@@ -4,8 +4,6 @@ import (
 	"errors"
 	"first-go-project/src/dtos"
 	"first-go-project/src/repositories"
-
-	"github.com/google/uuid"
 )
 
 // 測試用
@@ -44,30 +42,4 @@ func UpdateCustomer(dto *dtos.CustomerDTO) error {
 
 func DeleteCustomer(dto *dtos.CustomerDTO) error {
 	return nil
-}
-
-func mapToCustomerDTO(entity *repositories.CustomerEntity) *dtos.CustomerDTO {
-	dto := dtos.CustomerDTO{
-		UID:   entity.UID,
-		Name:  entity.Name,
-		Age:   entity.Age,
-		Email: entity.Email,
-	}
-
-	return &dto
-}
-
-func mapToCustomerEntity(dto *dtos.CustomerDTO) *repositories.CustomerEntity {
-	entity := repositories.CustomerEntity{
-		UID:   dto.UID,
-		Name:  dto.Name,
-		Age:   dto.Age,
-		Email: dto.Email,
-	}
-
-	if entity.UID == "" {
-		entity.UID = uuid.New().String()
-	}
-
-	return &entity
 }

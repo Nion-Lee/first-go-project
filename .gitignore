@@ -1,3 +1,4 @@
 .vscode/launch.json
 .vscode/
 src/repositories/nion_test.db
+src/__debug_bin.exe
