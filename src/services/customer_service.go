@@ -1,9 +1,10 @@
 package services
 
 import (
-	"errors"
 	"first-go-project/src/dtos"
 	"first-go-project/src/repositories"
+
+	"github.com/google/uuid"
 )
 
 // 測試用
@@ -23,14 +24,10 @@ func GetCustomer(uuid *string) (*dtos.CustomerDTO, error) {
 
 func CreateCustomer(dto *dtos.CustomerDTO) (*string, error) {
 	err := make(chan error)
-	go repositories.HasCustomerByUID(&dto.UID, err)
-
-	if <-err == nil {
-		return nil, errors.New("已有該客戶資料，無法重新創建")
-	}
-
 	uid := make(chan *string)
+
 	entity := mapToCustomerEntity(dto)
+	entity.UID = uuid.New().String()
 	go repositories.CreateCustomer(entity, uid, err)
 
 	return <-uid, <-err
