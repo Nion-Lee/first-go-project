@@ -14,10 +14,16 @@ func GetCustomer(context *gin.Context) {
 
 	uuidStr := context.Param("uuid")
 	_, err := uuid.Parse(uuidStr)
-	badRequestIfError(&err, context)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
 
 	dto, err := services.GetCustomer(&uuidStr)
-	badRequestIfError(&err, context)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
 
 	context.JSON(http.StatusOK, dto)
 }
@@ -27,10 +33,22 @@ func CreateCustomer(context *gin.Context) {
 
 	var dto dtos.CustomerDTO
 	err := context.BindJSON(&dto)
-	badRequestIfError(&err, context)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	_, err = uuid.Parse(dto.UID)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
 
 	uid, err := services.CreateCustomer(&dto)
-	badRequestIfError(&err, context)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
 
 	context.JSON(http.StatusOK, uid)
 }
