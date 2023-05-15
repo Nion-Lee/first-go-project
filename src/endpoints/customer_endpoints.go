@@ -38,12 +38,6 @@ func CreateCustomer(context *gin.Context) {
 		return
 	}
 
-	_, err = uuid.Parse(dto.UID)
-	if err != nil {
-		SetBadRequestWithError(err, context)
-		return
-	}
-
 	uid, err := services.CreateCustomer(&dto)
 	if err != nil {
 		SetBadRequestWithError(err, context)
