@@ -3,8 +3,6 @@ package services
 import (
 	"first-go-project/src/dtos"
 	"first-go-project/src/repositories"
-
-	"github.com/google/uuid"
 )
 
 func mapToCustomerDTO(entity *repositories.CustomerEntity) *dtos.CustomerDTO {
@@ -24,10 +22,6 @@ func mapToCustomerEntity(dto *dtos.CustomerDTO) *repositories.CustomerEntity {
 		Name:  dto.Name,
 		Age:   dto.Age,
 		Email: dto.Email,
-	}
-
-	if entity.UID == "" {
-		entity.UID = uuid.New().String()
 	}
 
 	return &entity
