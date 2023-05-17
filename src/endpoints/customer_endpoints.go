@@ -47,6 +47,44 @@ func CreateCustomer(context *gin.Context) {
 	context.JSON(http.StatusOK, uid)
 }
 
+func UpdateCustomer(context *gin.Context) {
+	defer exceptionRecover()
+
+	var dto dtos.CustomerDTO
+	err := context.BindJSON(&dto)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	err = services.UpdateCustomer(&dto)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	context.JSON(http.StatusOK, "ok")
+}
+
+func DeleteCustomer(context *gin.Context) {
+	defer exceptionRecover()
+
+	uuidStr := context.Param("uuid")
+	_, err := uuid.Parse(uuidStr)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	err = services.DeleteCustomer(&uuidStr)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	context.JSON(http.StatusOK, "ok")
+}
+
 // 測試用
 func HelloWorld(context *gin.Context) {
 	response := services.HelloWorld()

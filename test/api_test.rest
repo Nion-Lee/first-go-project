@@ -2,7 +2,7 @@
 GET http://localhost:8080/ HTTP/2.0
 ###
 
-GET  http://localhost:8080/Customer/5892c711-8aea-495e-898f-8e959dc58b64 HTTP/2.0
+GET  http://localhost:8080/Customer/fa39ded2-dbaf-4171-8936-ca022e6e5165 HTTP/2.0
 Content-Type: application/json
 ###
 
@@ -15,4 +15,19 @@ Content-Type: application/json
     "Age": 30, 
     "Email": "johndoe@example.com"
 }
+###
+
+PATCH  http://localhost:8080/Customer/Update HTTP/2.0
+Content-Type: application/json
+
+{
+    "UID": "05d3bb16-ab37-436b-a468-7c74c2491922", 
+    "Name": "Marry", 
+    "Age": 66, 
+    "Email": "Marrydoe@example.com"
+}
+###
+
+DELETE   http://localhost:8080/Customer/Delete/fa39ded2-dbaf-4171-8936-ca022e6e5165 HTTP/2.0
+Content-Type: application/json
 ###

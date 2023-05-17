@@ -34,9 +34,17 @@ func CreateCustomer(dto *dtos.CustomerDTO) (*string, error) {
 }
 
 func UpdateCustomer(dto *dtos.CustomerDTO) error {
-	return nil
+	err := make(chan error)
+	entity := mapToCustomerEntity(dto)
+
+	go repositories.UpdateCustomer(entity, err)
+
+	return <-err
 }
 
-func DeleteCustomer(dto *dtos.CustomerDTO) error {
-	return nil
+func DeleteCustomer(uuid *string) error {
+	err := make(chan error)
+	go repositories.DeleteCustomer(uuid, err)
+
+	return <-err
 }
