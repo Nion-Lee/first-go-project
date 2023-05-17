@@ -47,6 +47,25 @@ func CreateCustomer(context *gin.Context) {
 	context.JSON(http.StatusOK, uid)
 }
 
+func UpdateCustomer(context *gin.Context) {
+	defer exceptionRecover()
+
+	var dto dtos.CustomerDTO
+	err := context.BindJSON(&dto)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	err = services.UpdateCustomer(&dto)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	context.JSON(http.StatusOK, "更新成功")
+}
+
 // 測試用
 func HelloWorld(context *gin.Context) {
 	response := services.HelloWorld()

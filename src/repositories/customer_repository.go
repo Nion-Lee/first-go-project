@@ -25,3 +25,14 @@ func CreateCustomer(entity *CustomerEntity, uid chan *string, err chan error) {
 	uid <- &entity.UID
 	err <- result.Error
 }
+
+func UpdateCustomer(entity *CustomerEntity, err chan error) {
+	result := context.Model(&CustomerEntity{}).Where("uid = ?", entity.UID).Updates(CustomerEntity{
+		Name:    entity.Name,
+		Age:     entity.Age,
+		Email:   entity.Email,
+		Updated: time.Now(),
+	})
+
+	err <- result.Error
+}

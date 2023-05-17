@@ -2,7 +2,7 @@
 GET http://localhost:8080/ HTTP/2.0
 ###
 
-GET  http://localhost:8080/Customer/5892c711-8aea-495e-898f-8e959dc58b64 HTTP/2.0
+GET  http://localhost:8080/Customer/716d14fb-847c-4ac4-873b-f353880dc36b HTTP/2.0
 Content-Type: application/json
 ###
 
@@ -14,5 +14,16 @@ Content-Type: application/json
     "Name": "John Doe", 
     "Age": 30, 
     "Email": "johndoe@example.com"
+}
+###
+
+PATCH  http://localhost:8080/Customer/Update HTTP/2.0
+Content-Type: application/json
+
+{
+    "UID": "716d14fb-847c-4ac4-873b-f353880dc36b", 
+    "Name": "Marry", 
+    "Age": 66, 
+    "Email": "Marrydoe@example.com"
 }
 ###
