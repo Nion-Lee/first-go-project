@@ -42,6 +42,9 @@ func UpdateCustomer(dto *dtos.CustomerDTO) error {
 	return <-err
 }
 
-func DeleteCustomer(dto *dtos.CustomerDTO) error {
-	return nil
+func DeleteCustomer(uuid *string) error {
+	err := make(chan error)
+	go repositories.DeleteCustomer(uuid, err)
+
+	return <-err
 }

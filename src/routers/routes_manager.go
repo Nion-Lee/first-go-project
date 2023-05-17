@@ -11,5 +11,5 @@ func RegisterRoutes(router *gin.Engine) {
 	router.GET("/Customer/:uuid", endpoints.GetCustomer)
 	router.PUT("/Customer/Create", endpoints.CreateCustomer)
 	router.PATCH("/Customer/Update", endpoints.UpdateCustomer)
-	// router.DELETE("/Customer/Delete/:uuid", endpoints.DeleteCustomer)
+	router.DELETE("/Customer/Delete/:uuid", endpoints.DeleteCustomer)
 }

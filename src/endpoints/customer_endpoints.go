@@ -63,7 +63,26 @@ func UpdateCustomer(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, "更新成功")
+	context.JSON(http.StatusOK, "ok")
+}
+
+func DeleteCustomer(context *gin.Context) {
+	defer exceptionRecover()
+
+	uuidStr := context.Param("uuid")
+	_, err := uuid.Parse(uuidStr)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	err = services.DeleteCustomer(&uuidStr)
+	if err != nil {
+		SetBadRequestWithError(err, context)
+		return
+	}
+
+	context.JSON(http.StatusOK, "ok")
 }
 
 // 測試用
